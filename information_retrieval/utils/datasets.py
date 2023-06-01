@@ -22,12 +22,13 @@ from transformers import (
 from sentence_transformers import util
 
 
-def to_string(series) -> str :
+def to_string(series):
     sentence = ''
-    for word in series:
-        sentence += word+' [SEP] '
+    for words in series:
+        sentence += words+"\n"
     sentence = sentence.strip()
     return sentence
+
 
 class PreprocessPipeLine:
     
@@ -69,19 +70,19 @@ class PreprocessPipeLine:
 
 
 class DrugsInformation(torch.utils.data.Dataset):
-    def __init__(self, drugs, tokenizer, preprocess=None):
+    def __init__(self, drugs):
+        #super(DrugsInformation, self).__init__()
         self.drugs = drugs
-        self.preprocess = preprocess
         
-    def __getitem__(self, idx:int) -> str:
-        if isinstance(self.drugs, pd.DataFrame) and self.preprocess is not None:
-            drug_info = self.preprocess(self.drugs).loc[idx]
-            #drug_info = self.drugs.loc[idx]
+    def __getitem__(self, idx):
+        if isinstance(self.drugs, pd.DataFrame):
+            drug = self.drugs.loc[idx]
         else:
-            drug_info = self.drugs[idx]           
-        drug_info = to_string(drug_info)   
+            drug = self.drugs[idx]
         
-        return drug_info
-
+        drug= to_string(drug)   
+        return drug
+    
     def __len__(self):
-        return len(self.preprocess(self.drugs))
+        return len(self.drugs)
+
