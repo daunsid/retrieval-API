@@ -41,6 +41,7 @@ def load_embeddings(embd_path:str):
     with open(embd_path, 'rb') as pkfile:
         emb = pickle.load(pkfile)
         pkfile.close()
+        return emb
 
 def get_tokenizer(texts, model_name_path):
     if os.path.exists(model_name_path+'/config.json'):
