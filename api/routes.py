@@ -35,7 +35,7 @@ def get_drug_information(request:RequestID, ):
             }
     results['side_effects'] = results['side_effects'].split(',')
     results['brand_names'] = results['brand_names'].split(',')
-    results['related_drugs'] = results['brand_names'].split(',')
+    results['related_drugs'] = results['related_drugs'].split(',')
     results['drug_classes'] = results['drug_classes'].split(',')
 
     return results
