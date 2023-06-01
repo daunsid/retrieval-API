@@ -27,11 +27,15 @@ async def index():
 def get_drug_information(request:RequestID, ):
 
     text = request.query
-
     output = drugs_information_retrieval(text, load_embeddings(config['PATHS']['EMB_PATH']))
     idx, _ = output['corpus_id'], output['score']
     drug_info = get_DI(idx).split('\n')
     results = {field:info
             for field, info in zip(fields, drug_info)
             }
+    results['side_effects'] = results['side_effects'].split(',')
+    results['brand_names'] = results['brand_names'].split(',')
+    results['related_drugs'] = results['brand_names'].split(',')
+    results['drug_classes'] = results['drug_classes'].split(',')
+
     return results

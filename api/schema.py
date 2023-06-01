@@ -5,7 +5,7 @@ from typing import List, Optional
 class DrugInfo(BaseModel):
 
     drug_name:str
-    medical_condition: List[str]
+    medical_condition: str
     side_effects: List[str]
     generic_name: str
     drug_classes:List[str]
