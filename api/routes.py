@@ -23,7 +23,7 @@ router = APIRouter()
 async def index():
     return {"Information Retrieval":"Search for information about drugs"}
 
-@router.post("/drug_information", response_model= List[DrugInfo])
+@router.post("/drug_information", response_model= DrugInfo)
 def get_drug_information(request:RequestID, ):
 
     text = request.query
