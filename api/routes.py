@@ -28,7 +28,7 @@ def get_drug_information(request:RequestID, ):
 
     text = request.query
 
-    output = drugs_information_retrieval(text, load_embeddings(config['PATH']['EMB_PATH']))
+    output = drugs_information_retrieval(text, load_embeddings(config['PATHS']['EMB_PATH']))
     idx, _ = output['corpus_id'], output['score']
     drug_info = get_DI(idx).split('\n')
     results = {field:info

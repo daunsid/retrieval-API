@@ -11,6 +11,7 @@ transformers = "*"
 pandas = "*"
 torch = "*"
 sentence-transformers = "*"
+huggingface-hub = "*"
 
 [dev-packages]
 

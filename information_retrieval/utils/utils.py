@@ -1,5 +1,6 @@
 import torch
 import pickle
+import os
 
 import torch.nn as nn
 
@@ -9,7 +10,7 @@ from transformers import (
 )
 
 from ..network.transformer import Encoder
-from information_retrieval import config
+from information_retrieval import config, device
 #Mean Pooling - Take attention mask into account for correct averaging
 
 class MeanPooling(nn.Module) :
@@ -26,9 +27,9 @@ class MeanPooling(nn.Module) :
         return mean_embeddings
     
 def get_embeddings(encoded_inputs):
-    encoded_inputs = {k: v.to(config["device"]) for k, v in encoded_inputs.items()}
+    encoded_inputs = {k: v.to(device) for k, v in encoded_inputs.items()}
     with torch.no_grad():
-        model = Encoder(config['PATH']["model_path"]).to(config["device"])
+        model = Encoder(config['PATHS']["MODEL_PATH"]).to(device)
         model_output = model(**encoded_inputs)
         
     pooler = MeanPooling()
@@ -41,11 +42,18 @@ def load_embeddings(embd_path:str):
         emb = pickle.load(pkfile)
         pkfile.close()
 
-def get_tokenizer(texts):
-    tokenizer = AutoTokenizer.from_pretrained(config["model_name_path"])
+def get_tokenizer(texts, model_name_path):
+    if os.path.exists(model_name_path+'/config.json'):
+        tokenizer = AutoTokenizer.from_pretrained(model_name_path)
+        
+    else:
+        model_name=config['MODEL_CONFIG']['model_name']
+        tokenizer = AutoTokenizer.from_pretrained(model_name)
+        tokenizer.save_pretrained(model_name_path)
+
     encoded_texts = tokenizer(
         texts,add_special_tokens=True,padding='max_length',
-        max_length=int(config["max_length"]),
+        max_length=int(config['MODEL_CONFIG']["max_length"]),
         truncation=True,
         return_tensors='pt',
         #return_attention_mask=True
