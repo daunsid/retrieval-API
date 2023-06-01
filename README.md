@@ -33,6 +33,6 @@ Other ways to try the API request:
 
 Example:
 ```
-curl --location --request POST 'http://127.0.0.1:8000/single_essay' \
+curl --location --request POST 'http://127.0.0.1:8000/drug_information' \
 --header 'Content-Type: application/json' \
 --data-raw '{
