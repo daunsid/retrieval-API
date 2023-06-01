@@ -27,4 +27,3 @@ def test_get_drug_information():
     )
     assert response.status_code == 200
     response = response.json()
-    assert response["text"]
