@@ -19,7 +19,7 @@ class Encoder(nn.Module):
         super(Encoder, self).__init__()
         if os.path.exists(model_name_path+'/config.json'):
             self.config = AutoConfig.from_pretrained(model_name_path)
-            self.model = AutoModel.from_pretrained(model_name_path, from_pt=True, config=self.config)
+            self.model = AutoModel.from_pretrained(model_name_path, config=self.config)
 
         else:
             model_name=config['MODEL_CONFIG']['model_name']
