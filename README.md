@@ -1,4 +1,4 @@
-# DrugInformationRetrieval-API
+# Drug InformationRetrieval API
 **Semantic-search inference API** to retrive information based on query and different criteria: drug name, side effects, related drug, generic name, 
 
 I used `sentence-transformers/all-MiniLM-L6-v2` model two distict steps
